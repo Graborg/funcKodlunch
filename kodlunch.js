@@ -55,19 +55,32 @@ const persons = [
 function mailPreferencesFunc(arr) {
   res = arr
     .filter(({ age }) => age > 18)
-    .map((e) =>
-      Object.assign({
-        drink: "beer",
-        e,
-      })
-    );
-  sendMail(res);
+    .map((e) => {
+      if (e.age >= 20) {
+        return Object.assign({
+          drink: "wine",
+          e,
+        });
+      } else {
+        return Object.assign({
+          drink: "beer",
+          e,
+        });
+      }
+    });
+  const statsFor = (drink, persons, total) =>
+    `${drink}Drinkers ${
+      persons.filter((p) => p.drink === drink).length / total
+    }%`;
   if (res) {
+    console.log(statsFor("wine", res, arr.length));
+    console.log(statsFor("beer", res, arr.length));
+    console.log(`excluded ${(arr.length - res.length) / arr.length}%`);
     sendMail(res);
   } else {
     console.log("nothing to send");
   }
 }
 
-mailPreferences(persons);
+mailPreferencesFunc(persons);
 saveToDb(persons);
