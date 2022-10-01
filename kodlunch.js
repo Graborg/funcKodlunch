@@ -39,10 +39,13 @@ const persons = [
 function mailPreferencesFunc(arr) {
   res = arr
     .filter(({ age }) => age > 18)
-    .map((e) => {
-      e.drink = "beer";
-      return e;
-    });
+    .map((e) =>
+      Object.assign({
+        drink: "beer",
+        e,
+      })
+    );
+  sendMail(res);
   if (res) {
     sendMail(res);
   } else {
