@@ -1,23 +1,25 @@
 const sendMail = (data) => console.log("mailing", data);
 const saveToDb = (data) => console.log("saving", data);
 
-// function mailPreferences(arr) {
-//   let result = [];
+function mailPreferences(arr) {
+  let result = [];
 
-//   for (let index = 0; index < arr.length; index++) {
-//     const person = arr[index];
-//     if (person.age >= 18) {
-//       person.drink = "beer";
-//       result.push(person);
-//     } else {
-//     }
-//   }
-//   if (result) {
-//     sendMail(result);
-//   } else {
-//     console.log("nothing to send");
-//   }
-// }
+  for (let index = 0; index < arr.length; index++) {
+    const person = arr[index];
+    if (person.age >= 20) {
+      person.drink = "wine";
+      result.push(person);
+    } else if (person.age >= 18) {
+      person.drink = "beer";
+      result.push(person);
+    }
+  }
+  if (result) {
+    sendMail(result);
+  } else {
+    console.log("nothing to send");
+  }
+}
 
 const persons = [
   {
