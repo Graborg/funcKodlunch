@@ -56,14 +56,24 @@ function mailPreferencesFunc(arr) {
   res = arr
     .filter(({ age }) => age > 18)
     .map((e) => {
-      if (e.age >= 20) {
+      if (e.age >= 40) {
         return Object.assign({
-          drink: "wine",
+          drink: "pulque",
           e,
         });
-      } else {
+      } else if (e.age >= 40) {
+        return Object.assign({
+          drink: "kombucha",
+          e,
+        });
+      } else if (e.age >= 20) {
         return Object.assign({
           drink: "beer",
+          e,
+        });
+      } else if (e.age >= 18) {
+        return Object.assign({
+          drink: "",
           e,
         });
       }
@@ -75,6 +85,8 @@ function mailPreferencesFunc(arr) {
   if (res) {
     console.log(statsFor("wine", res, arr.length));
     console.log(statsFor("beer", res, arr.length));
+    console.log(statsFor("kombucha", res, arr.length));
+    console.log(statsFor("pulque", res, arr.length));
     console.log(`excluded ${(arr.length - res.length) / arr.length}%`);
     sendMail(res);
   } else {
