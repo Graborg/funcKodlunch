@@ -3,7 +3,12 @@ const saveToDb = (data) => console.log("saving", data);
 
 function mailPreferences(arr) {
   let result = [];
-  const drinkers = {};
+  const drinkers = {
+    pulque: 0,
+    kombucha: 0,
+    wine: 0,
+    beer: 0,
+  };
 
   for (let index = 0; index < arr.length; index++) {
     const person = arr[index];
@@ -11,38 +16,22 @@ function mailPreferences(arr) {
       const drink = "pulque";
       person.drink = drink;
       result.push(person);
-      if (drinkers[drink]) {
-        drinkers[drink] += 1;
-      } else {
-        drinkers[drink] = 1;
-      }
+      drinkers[drink] += 1;
     } else if (person.age >= 40) {
       const drink = "kombucha";
       person.drink = drink;
       result.push(person);
-      if (drinkers[drink]) {
-        drinkers[drink] += 1;
-      } else {
-        drinkers[drink] = 1;
-      }
+      drinkers[drink] += 1;
     } else if (person.age >= 20) {
       const drink = "wine";
       person.drink = drink;
       result.push(person);
-      if (drinkers[drink]) {
-        drinkers[drink] += 1;
-      } else {
-        drinkers[drink] = 1;
-      }
+      drinkers[drink] += 1;
     } else if (person.age >= 18) {
       const drink = "beer";
       person.drink = drink;
       result.push(person);
-      if (drinkers[drink]) {
-        drinkers[drink] += 1;
-      } else {
-        drinkers[drink] = 1;
-      }
+      drinkers[drink] += 1;
     }
   }
   if (result) {
