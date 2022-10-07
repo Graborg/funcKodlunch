@@ -51,12 +51,14 @@ const persons = [
     },
   },
 ];
+const printEntry = (line) => console.log(line);
+const toPercentage = (amount, total) => Math.round((amount * 100) / total);
 
 function mailPreferencesFunc(arr) {
   res = arr
     .filter(({ age }) => age > 18)
     .map((e) => {
-      if (e.age >= 40) {
+      if (e.age >= 50) {
         return Object.assign({
           drink: "pulque",
           e,
@@ -68,26 +70,37 @@ function mailPreferencesFunc(arr) {
         });
       } else if (e.age >= 20) {
         return Object.assign({
-          drink: "beer",
+          drink: "wine",
           e,
         });
       } else if (e.age >= 18) {
         return Object.assign({
-          drink: "",
+          drink: "beer",
           e,
         });
       }
     });
-  const statsFor = (drink, persons, total) =>
-    `${drink}Drinkers ${
-      persons.filter((p) => p.drink === drink).length / total
-    }%`;
+
+  const printDrinkerStats = (list, totalNr) =>
+    Object.entries(
+      list
+        .map(({ drink }) => drink)
+        .reduce((acc, drink) => {
+          if (!acc[drink]) {
+            acc[drink] = 1;
+          } else {
+            acc[drink] = acc[drink] + 1;
+          }
+          return acc;
+        }, {})
+    )
+      .map(([drink, drinkers]) => [drink, toPercentage(drinkers, totalNr)])
+      .map(([drink, percent]) => `${drink}Drinkers ${percent} %`)
+      .concat([`excluded ${toPercentage(totalNr - list.length, totalNr)} %`])
+      .map(printEntry);
+
   if (res) {
-    console.log(statsFor("wine", res, arr.length));
-    console.log(statsFor("beer", res, arr.length));
-    console.log(statsFor("kombucha", res, arr.length));
-    console.log(statsFor("pulque", res, arr.length));
-    console.log(`excluded ${(arr.length - res.length) / arr.length}%`);
+    printDrinkerStats(res, arr.length);
     sendMail(res);
   } else {
     console.log("nothing to send");
