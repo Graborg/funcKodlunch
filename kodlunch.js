@@ -3,35 +3,55 @@ const saveToDb = (data) => console.log("saving", data);
 
 function mailPreferences(arr) {
   let result = [];
-  let beerDrinkers = 0;
-  let wineDrinkers = 0;
-  let pulqueDrinkers = 0;
-  let buchDrinkers = 0;
+  const drinkers = {};
 
   for (let index = 0; index < arr.length; index++) {
     const person = arr[index];
     if (person.age >= 50) {
-      person.drink = "pulque";
+      const drink = "pulque";
+      person.drink = drink;
       result.push(person);
-      pulqueDrinkers += 1;
+      if (drinkers[drink]) {
+        drinkers[drink] += 1;
+      } else {
+        drinkers[drink] = 1;
+      }
     } else if (person.age >= 40) {
-      person.drink = "kombucha";
+      const drink = "kombucha";
+      person.drink = drink;
       result.push(person);
+      if (drinkers[drink]) {
+        drinkers[drink] += 1;
+      } else {
+        drinkers[drink] = 1;
+      }
     } else if (person.age >= 20) {
-      person.drink = "wine";
+      const drink = "wine";
+      person.drink = drink;
       result.push(person);
-      wineDrinkers += 1;
+      if (drinkers[drink]) {
+        drinkers[drink] += 1;
+      } else {
+        drinkers[drink] = 1;
+      }
     } else if (person.age >= 18) {
-      person.drink = "beer";
+      const drink = "beer";
+      person.drink = drink;
       result.push(person);
-      beerDrinkers += 1;
+      if (drinkers[drink]) {
+        drinkers[drink] += 1;
+      } else {
+        drinkers[drink] = 1;
+      }
     }
   }
   if (result) {
-    console.log(`wineDrinkers ${toPercentage(wineDrinkers, arr.length)}%`);
-    console.log(`beerDrinkers ${toPercentage(beerDrinkers, arr.length)}%`);
-    console.log(`pulqueDrinkers ${toPercentage(pulqueDrinkers, arr.length)}%`);
-    console.log(`kombuchaDrinkers ${toPercentage(buchDrinkers, arr.length)}%`);
+    for (const drink in drinkers) {
+      const nrOfDrinkers = drinkers[drink];
+      console.log(
+        `${drink}Drinkers ${toPercentage(nrOfDrinkers, arr.length)} %`
+      );
+    }
     console.log(
       `excluded ${toPercentage(arr.length - result.length, arr.length)} %`
     );
