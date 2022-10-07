@@ -37,9 +37,11 @@ function mailPreferences(arr) {
   if (result) {
     for (const drink in drinkers) {
       const nrOfDrinkers = drinkers[drink];
-      console.log(
-        `${drink}Drinkers ${toPercentage(nrOfDrinkers, arr.length)} %`
-      );
+      if (nrOfDrinkers > 0) {
+        console.log(
+          `${drink}Drinkers ${toPercentage(nrOfDrinkers, arr.length)} %`
+        );
+      }
     }
     console.log(
       `excluded ${toPercentage(arr.length - result.length, arr.length)} %`
