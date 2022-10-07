@@ -5,10 +5,19 @@ function mailPreferences(arr) {
   let result = [];
   let beerDrinkers = 0;
   let wineDrinkers = 0;
+  let pulqueDrinkers = 0;
+  let buchDrinkers = 0;
 
   for (let index = 0; index < arr.length; index++) {
     const person = arr[index];
-    if (person.age >= 20) {
+    if (person.age >= 50) {
+      person.drink = "pulque";
+      result.push(person);
+      pulqueDrinkers += 1;
+    } else if (person.age >= 40) {
+      person.drink = "kombucha";
+      result.push(person);
+    } else if (person.age >= 20) {
       person.drink = "wine";
       result.push(person);
       wineDrinkers += 1;
@@ -19,9 +28,13 @@ function mailPreferences(arr) {
     }
   }
   if (result) {
-    console.log(`wineDrinkers ${wineDrinkers / arr.length}%`);
-    console.log(`beerDrinkers ${beerDrinkers / arr.length}%`);
-    console.log(`excluded ${(arr.length - result.length) / arr.length}%`);
+    console.log(`wineDrinkers ${toPercentage(wineDrinkers, arr.length)}%`);
+    console.log(`beerDrinkers ${toPercentage(beerDrinkers, arr.length)}%`);
+    console.log(`pulqueDrinkers ${toPercentage(pulqueDrinkers, arr.length)}%`);
+    console.log(`kombuchaDrinkers ${toPercentage(buchDrinkers, arr.length)}%`);
+    console.log(
+      `excluded ${toPercentage(arr.length - result.length, arr.length)} %`
+    );
     sendMail(result);
   } else {
     console.log("nothing to send");
@@ -107,5 +120,5 @@ function mailPreferencesFunc(arr) {
   }
 }
 
-mailPreferencesFunc(persons);
+mailPreferences(persons);
 saveToDb(persons);
